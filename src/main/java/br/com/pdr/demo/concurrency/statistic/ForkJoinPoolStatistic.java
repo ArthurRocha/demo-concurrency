@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 
-import br.com.pdr.demo.concurrency.util.FakeService;
+import br.com.pdr.demo.concurrency.service.HighProccessService;
 
 public class ForkJoinPoolStatistic extends Statistic {
 
@@ -21,7 +21,7 @@ public class ForkJoinPoolStatistic extends Statistic {
 	
 	public void execute() throws InterruptedException, ExecutionException {
 		long startTimeMillis = System.currentTimeMillis();
-		FakeService fakeService = new FakeService(SIZE_OF_THE_GAME);
+		HighProccessService fakeService = new HighProccessService(SIZE_OF_THE_GAME);
 		int availableProcessors = Runtime.getRuntime().availableProcessors();
 		int sliceData = Math.floorDiv(SIZE_OF_THE_GAME, availableProcessors);
 		List<ForkJoinTask<Boolean>> tasks = new ArrayList<ForkJoinTask<Boolean>>();
@@ -39,7 +39,7 @@ public class ForkJoinPoolStatistic extends Statistic {
 		this.timeMillis = System.currentTimeMillis() - startTimeMillis;
 	}
 
-	private void addStringBuilderTask(final List<ForkJoinTask<Boolean>> tasks, final FakeService fakeService, final int start, final int end) {
+	private void addStringBuilderTask(final List<ForkJoinTask<Boolean>> tasks, final HighProccessService fakeService, final int start, final int end) {
 		tasks.add(pool.submit(new ForkJoinTask<Boolean>() {
 
 			private static final long serialVersionUID = 1L;

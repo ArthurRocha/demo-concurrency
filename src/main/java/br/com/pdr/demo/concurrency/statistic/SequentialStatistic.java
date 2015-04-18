@@ -1,6 +1,6 @@
 package br.com.pdr.demo.concurrency.statistic;
 
-import br.com.pdr.demo.concurrency.util.FakeService;
+import br.com.pdr.demo.concurrency.service.HighProccessService;
 
 public class SequentialStatistic extends Statistic {
 
@@ -12,7 +12,7 @@ public class SequentialStatistic extends Statistic {
 	
 	public void execute() {
 		long startTimeMillis = System.currentTimeMillis();
-		FakeService fakeService = new FakeService(SIZE_OF_THE_GAME);
+		HighProccessService fakeService = new HighProccessService(SIZE_OF_THE_GAME);
 		fakeService.playSequential();
 		this.timeMillis = System.currentTimeMillis() - startTimeMillis;
 	}

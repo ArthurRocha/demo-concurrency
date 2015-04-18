@@ -1,17 +1,17 @@
-package br.com.pdr.demo.concurrency.util;
+package br.com.pdr.demo.concurrency.service;
 
-public class FakeService {
+import br.com.pdr.demo.concurrency.util.FakeModel;
 
-	private int sizeOfTheGame; 
+public class HighProccessService extends Service {
+
 	private FakeModel[] models;
 	
-	public FakeService(int size) {
-		this.sizeOfTheGame = size;
-		models = new FakeModel[sizeOfTheGame];
-		this.createBigData();
+	public HighProccessService(int size) {
+		super(size);
 	}
 	
 	public void createBigData() {
+		models = new FakeModel[sizeOfTheGame];
 		for (int i = 0 ; i < sizeOfTheGame ; i ++) {
 			models[i] = new FakeModel(i, "Name " + i);
 		}
@@ -32,7 +32,17 @@ public class FakeService {
 		}
 	}
 	
-	public double playWithNumbers() {
+	public void playSequentialWithAsyncOperation () {
+		// TODO
+	}
+
+	public void playSlicedWithAsyncOperation(int start, int end) {
+		// TODO Auto-generated method stub
+	}
+	
+	// PROCCESS -----------------------------------------------
+	
+	private double playWithNumbers() {
 		double result = 616;
 		for (int i = 0 ; i < sizeOfTheGame ; i ++) {
 			result = ((i * result) / 3.14) * 2;
@@ -40,11 +50,12 @@ public class FakeService {
 		return result;
 	}
 	
-	public StringBuilder playWithStringBuilder() {
+	private StringBuilder playWithStringBuilder() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0 ; i < sizeOfTheGame ; i ++) {
 			sb.append(i);
 		}
 		return sb;
 	}
+
 }
