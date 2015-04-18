@@ -3,43 +3,43 @@ package br.com.pdr.demo.concurrency;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.pdr.demo.concurrency.service.HighProccessService;
 import br.com.pdr.demo.concurrency.statistic.ForkJoinPoolStatistic;
 import br.com.pdr.demo.concurrency.statistic.SequentialStatistic;
 import br.com.pdr.demo.concurrency.statistic.Statistic;
 
 public class ConcurrencyApplication {
 
-	/*
-	 * O tamanho da brincadeira.
-	 * Este valor influencia na quantidade de 'FakeModel' criados e na quantidade de execuções realizadas sobre ele.
+	/**
+	 * Este valor influencia na quantidade de objetos criados nos servicos 
+	 * e na quantidade de execuções realizadas sobre ele.
 	 * ex.:
-	 * 10000 instancias
-	 * 10000 * 10000 = 100000000 processamentos executados ()
+	 * HighProccessService 
+	 * 10000 instancias 
+	 * 10000 * 10000 = 100000000 processamentos executados
 	 */
-	private static int SIZE_OF_THE_GAME = 10000;
-	
+	public static int SIZE_OF_THE_GAME = 10000;
+
 	public static void main(String[] args) throws Exception {
 		List<Statistic> lsStatistics = new ArrayList<Statistic>();
-		lsStatistics.add(new SequentialStatistic(SIZE_OF_THE_GAME));
-		lsStatistics.add(new ForkJoinPoolStatistic(SIZE_OF_THE_GAME));
-		
+		lsStatistics.add(new SequentialStatistic());
+		lsStatistics.add(new ForkJoinPoolStatistic());
 		for (Statistic statistic : lsStatistics) {
-			statistic.execute();
+			statistic.execute(new HighProccessService(SIZE_OF_THE_GAME));
 			statistic.printStatistic();
 			System.gc();
 		}
-		howLongWeCanGo();
+		howLongWeCanGo(lsStatistics);
 	}
-	
-	public static void howLongWeCanGo() throws Exception {
-		while(true) {
+
+	public static void howLongWeCanGo(final List<Statistic> lsStatistics)
+			throws Exception {
+		while (true) {
+			System.out.println("-------------------");
+			System.out.println("\t the game grew\t" + SIZE_OF_THE_GAME);
 			SIZE_OF_THE_GAME += 100;
-			List<Statistic> lsStatistics = new ArrayList<Statistic>();
-			lsStatistics.add(new SequentialStatistic(SIZE_OF_THE_GAME));
-			lsStatistics.add(new ForkJoinPoolStatistic(SIZE_OF_THE_GAME));
 			for (Statistic statistic : lsStatistics) {
-				System.out.println("Game size\t\t" + SIZE_OF_THE_GAME);
-				statistic.execute();
+				statistic.execute(new HighProccessService(SIZE_OF_THE_GAME));
 				statistic.printStatistic();
 				System.gc();
 			}
