@@ -20,13 +20,13 @@
 	Reservada para hardware:	44,7 MB
 
 Resultados	(10000)
-						
-SequentialStatistic		2474 ms
-ForkJoinPoolStatistic		719 ms
 
-	 the game grew    13900
-SequentialStatistic		4862 ms
-ForkJoinPoolStatistic	2055 ms
+SequentialStatistic             2474 ms
+ForkJoinPoolStatistic           719 ms
+
+            the game grew    13900
+SequentialStatistic             4862 ms
+ForkJoinPoolStatistic           2055 ms
 -------------------
 	 the game grew	14000
  ='/  -> Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
