@@ -1,4 +1,4 @@
-package br.com.pdr.demo.concurrency;
+package br.com.pdr.demo.concurrency.util;
 
 public class FakeService {
 

@@ -1,4 +1,4 @@
-package br.com.pdr.demo.concurrency;
+package br.com.pdr.demo.concurrency.statistic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,33 +6,21 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 
-public class ForkJoinPoolStatistic {
-	
-	private static final int SIZE_OF_THE_GAME = 10000;
-	
+import br.com.pdr.demo.concurrency.util.FakeService;
+
+public class ForkJoinPoolStatistic extends Statistic {
+
+	private final int SIZE_OF_THE_GAME;
 	private ForkJoinPool pool;
 	
-	public ForkJoinPoolStatistic() {
+	
+	public ForkJoinPoolStatistic(int size) {
 		this.pool = new ForkJoinPool();
-	}
-
-	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		ForkJoinPoolStatistic forkJoinPoolStatistic = new ForkJoinPoolStatistic();
-		long startTimeMillis = System.currentTimeMillis();
-		forkJoinPoolStatistic.executeSequential();
-		System.out.println("Sequential " + (System.currentTimeMillis() - startTimeMillis) + " ms");
-		
-		startTimeMillis = System.currentTimeMillis();
-		forkJoinPoolStatistic.executeForkJoinPool();
-		System.out.println("ForkJoinPool " + (System.currentTimeMillis() - startTimeMillis) + " ms");
+		this.SIZE_OF_THE_GAME = size;
 	}
 	
-	private void executeSequential() {
-		FakeService fakeService = new FakeService(SIZE_OF_THE_GAME);
-		fakeService.playSequential();
-	}
-
-	public void executeForkJoinPool() throws InterruptedException, ExecutionException {
+	public void execute() throws InterruptedException, ExecutionException {
+		long startTimeMillis = System.currentTimeMillis();
 		FakeService fakeService = new FakeService(SIZE_OF_THE_GAME);
 		int availableProcessors = Runtime.getRuntime().availableProcessors();
 		int sliceData = Math.floorDiv(SIZE_OF_THE_GAME, availableProcessors);
@@ -48,7 +36,7 @@ public class ForkJoinPoolStatistic {
 		for (ForkJoinTask<Boolean> forkJoinTask : tasks) {
 			forkJoinTask.get();
 		}
-		
+		this.timeMillis = System.currentTimeMillis() - startTimeMillis;
 	}
 
 	private void addStringBuilderTask(final List<ForkJoinTask<Boolean>> tasks, final FakeService fakeService, final int start, final int end) {
