@@ -19,7 +19,7 @@
 	Fator forma:	DIMM
 	Reservada para hardware:	44,7 MB
 
-Resultados	(10000)
+##Resultados    (10000)
 
 SequentialStatistic             2474 ms
 ForkJoinPoolStatistic           719 ms
