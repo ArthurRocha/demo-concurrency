@@ -29,7 +29,7 @@ public class ConcurrencyApplication {
 			statistic.printStatistic();
 			System.gc();
 		}
-		howLongWeCanGo(lsStatistics);
+		//howLongWeCanGo(lsStatistics);
 	}
 
 	public static void howLongWeCanGo(final List<Statistic> lsStatistics)
